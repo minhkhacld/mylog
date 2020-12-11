@@ -39,6 +39,11 @@
             font: 16px Arial;
         }
 
+        form {
+            margin-left: 8px;
+            margin-right: 8px;
+        }
+
         /*the container must be positioned relative:*/
         .autocomplete {
             position: relative;
@@ -61,12 +66,22 @@
             height: 50px;
         }
 
-        input[type=submit] {
+        button[type=submit] {
             background-color: DodgerBlue;
+            width: 150px;
+            height: 50px;
+            font-weight: bold;
             color: #fff;
             cursor: pointer;
+            display: block;
+            text-align: center;
+            margin: 0 auto
         }
-
+        button[type=submit]:hover {
+            background-color: tomato;            
+            color: #fff;
+            
+        }
         .autocomplete-items {
             position: absolute;
             border: 1px solid #d4d4d4;
@@ -77,7 +92,7 @@
             top: 100%;
             left: 0;
             right: 0;
-            
+
         }
 
         .autocomplete-items div {
@@ -97,9 +112,10 @@
             background-color: DodgerBlue !important;
             color: #ffffff;
         }
-        p{
-            margin: 10px;
-            font-weight: bold;    
+
+        p {
+            margin: 20px;
+            font-weight: bold;
         }
     </style>
 
@@ -110,13 +126,10 @@
         <div class="row" class="header">
             <h1>MY LOG</h1>
         </div>
-
-
+        <!-- action="https://script.google.com/macros/s/AKfycbzhBOcGSiovvunmWFpJXufsVGX7zyfFgTliz63tA5JRQhA456VI/exec"
+        method="GET"> -->
         <!-- Form COPT & COT -->
-        <form id="test-form" name="myForm"
-            action="https://script.google.com/macros/s/AKfycbzhBOcGSiovvunmWFpJXufsVGX7zyfFgTliz63tA5JRQhA456VI/exec"
-            method="GET">
-
+        <form id="test-form" name="myForm">
             <!-- Nhập Khu vực -->
             <div class="row">
                 <div class="form-group">
@@ -125,18 +138,6 @@
                         placeholder="">
                 </div>
             </div>
-            <!-- <div class="row">
-                <div class="form-group">
-                    <label for="">Ghi chú về cái gì</label>                    
-                    <select class="form-control" name="NoteType" id="">                       
-                        <option value="Job">Job</option>
-                        <option value="Dev">Dev</option>
-                        <option value="Love">Love</option>
-                        <option value="Family">Family</option>
-                        <option value="Others">Others</option>
-                    </select>
-                </div>
-            </div>             -->
             <!-- Nhập Ghi chú -->
             <div class="row">
                 <div class="form-group">
@@ -153,16 +154,22 @@
                         placeholder="Key để lọc">
                 </div>
             </div>
+            <!-- <div id="outerdiv"></div> -->
+            <div id="message"
+                style="display:none;height:30px;line-height:30px;margin:0 auto; text-align:center; font-weight:bold;background-color:#34eb71;color:black; margin-bottom:15px">
+                Cập nhật thành công</div>
             <!-- Submit -->
             <div class="row">
-                <button type="submit" id="btn" class="btn">Cập Nhật</button>
+                <button type="submit" id="submit-form" class="btn">Cập Nhật</button>
             </div>
             <p align="center">
-                <a href="https://docs.google.com/spreadsheets/d/1zjckvwGVmik53VixMgJ7IuHwNGlEWGaezVozBekTEJQ/edit?usp=sharing">GO TO NOTE</a>
+                <a
+                    href="https://docs.google.com/spreadsheets/d/1zjckvwGVmik53VixMgJ7IuHwNGlEWGaezVozBekTEJQ/edit?usp=sharing">GO
+                    TO NOTE</a>
             </p>
-                <!-- <iframe
+            <!-- <iframe
                     src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSjQI30OsJ85YsZmOjxfInWFXIC9t_K4a3sbwonRNzGVXAEvmntnm7SJ4OtNRN2BF4si0z4BSvZCsdK/pubhtml?widget=true&amp;headers=false"></iframe> -->
-            
+
         </form>
     </div>
     <script>
@@ -183,6 +190,40 @@
             $("#myInput").autocomplete({
                 source: availableTags
             });
+        });
+
+        // ajax sent to google sheet
+        var $form = $("form#test-form"),
+            url =
+                "https://script.google.com/macros/s/AKfycbzhBOcGSiovvunmWFpJXufsVGX7zyfFgTliz63tA5JRQhA456VI/exec";
+
+        $("#submit-form").on("click", function (e) {
+            e.preventDefault();
+            var jqxhr = $.ajax({
+                url: url,
+                method: "GET",
+                dataType: "json",
+                data: $form.serializeArray(),
+            }).success;
+            // do something
+            $(document).ready(function () {
+                // $("#outerdiv").append(
+                //     '<div class="border pad" style="height:30px;line-height:30px;margin:0 auto; text-align:center; font-weight:bold;background-color:#34eb71;color:black; margin-bottom:15px">Cập nhật thành công cho: <strong>' + $("#myInput").val() + '</strong></div>'
+                // );
+                // setTimeout(function () {
+                //  $("#outerdiv").hide(3200).fadeOut(1000);
+                // }, 5000)
+              
+
+                $(document).ready(function () {
+                    // var newText = $("#myInput").val().split(" ");
+                    $('#message').fadeIn('slow', function () {
+                        $('#message').delay(5000).fadeOut();
+                    });
+                });
+
+            });
+            console.log("sent thanh cong")();
         });
     </script>
 </body>

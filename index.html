@@ -25,6 +25,82 @@
         crossorigin="anonymous"></script>
     <!-- <link href="/open-iconic/font/css/open-iconic.css" rel="stylesheet"> -->
     </style>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style>
+        /* autocompltd */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font: 16px Arial;
+        }
+
+        /*the container must be positioned relative:*/
+        .autocomplete {
+            position: relative;
+            display: inline-block;
+            display: grid;
+            margin: 0.5rem;
+            padding: 0.1rem;
+        }
+
+        input {
+            border: 1px solid transparent;
+            background-color: #f1f1f1;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        input[type=text] {
+            background-color: #f1f1f1;
+            width: 100%;
+        }
+
+        input[type=submit] {
+            background-color: DodgerBlue;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            /*position the autocomplete items to be the same width as the container:*/
+            top: 100%;
+            left: 0;
+            right: 0;
+        }
+
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+        }
+
+        /*when hovering an item:*/
+        .autocomplete-items div:hover {
+            background-color: #e9e9e9;
+        }
+
+        /*when navigating through the items using the arrow keys:*/
+        .autocomplete-active {
+            background-color: DodgerBlue !important;
+            color: #ffffff;
+        }
+        p{
+            margin: 10px;
+            font-weight: bold;    
+        }
+    </style>
+
 </head>
 
 <body>
@@ -42,6 +118,13 @@
             <!-- Nhập Khu vực -->
             <div class="row">
                 <div class="form-group">
+                    <label for="">Ghi chú về cái gì</label>
+                    <input type="text" class="autocomplete" name="Notetype" id="myInput" aria-describedby="helpId"
+                        placeholder="">
+                </div>
+            </div>
+            <!-- <div class="row">
+                <div class="form-group">
                     <label for="">Ghi chú về cái gì</label>                    
                     <select class="form-control" name="NoteType" id="">                       
                         <option value="Job">Job</option>
@@ -51,12 +134,13 @@
                         <option value="Others">Others</option>
                     </select>
                 </div>
-            </div>            
+            </div>             -->
             <!-- Nhập Ghi chú -->
             <div class="row">
                 <div class="form-group">
                     <label for="">Nội dung là gì</label>
-                    <textarea class="form-control" name="Discription" id="" rows="8" placeholder="Nhập diễn giải"></textarea>
+                    <textarea class="form-control" name="Discription" id="" rows="8"
+                        placeholder="Nhập diễn giải"></textarea>
                 </div>
             </div>
             <!-- Nhập line -->
@@ -71,11 +155,34 @@
             <div class="row">
                 <button type="submit" id="btn" class="btn">Cập Nhật</button>
             </div>
-            <div class="row">
-                <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSjQI30OsJ85YsZmOjxfInWFXIC9t_K4a3sbwonRNzGVXAEvmntnm7SJ4OtNRN2BF4si0z4BSvZCsdK/pubhtml?widget=true&amp;headers=false"></iframe>
-            </div>
+            <p align="center">
+                <a href="https://docs.google.com/spreadsheets/d/1zjckvwGVmik53VixMgJ7IuHwNGlEWGaezVozBekTEJQ/edit?usp=sharing">GO TO NOTE</a>
+            </p>
+                <!-- <iframe
+                    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSjQI30OsJ85YsZmOjxfInWFXIC9t_K4a3sbwonRNzGVXAEvmntnm7SJ4OtNRN2BF4si0z4BSvZCsdK/pubhtml?widget=true&amp;headers=false"></iframe> -->
+            
         </form>
     </div>
+    <script>
+        $(function () {
+            var availableTags = [
+                "Job",
+                "Layout",
+                "Formula",
+                "Excel",
+                "Tools and Machine",
+                "Love",
+                "Friend",
+                "Money",
+                "Family",
+                "Special",
+                "Health"
+            ];
+            $("#myInput").autocomplete({
+                source: availableTags
+            });
+        });
+    </script>
 </body>
 
 </html>
